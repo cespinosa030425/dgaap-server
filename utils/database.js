@@ -8,5 +8,6 @@ module.exports = {
     DB_PASSWORD: data.parsed.DB_PASSWORD,
     DB_HOST: data.parsed.DB_HOST,
     DB_DATABASE: data.parsed.DB_DATABASE,
-    DB_DIALECT: data.parsed.DB_DIALECT
+    DB_DIALECT: data.parsed.DB_DIALECT,
+    DB_PORT: data.parsed.DB_PORT
 };

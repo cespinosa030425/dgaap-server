@@ -13,6 +13,7 @@ const newPost = async (req, res) => {
               category: req.body.category,
               author: req.body.author,
               image: req.body.image,
+              views: req.body.views,
               isActive: req.body.isactive,
               createdBy: req.body.createdby,
               modifiedBy: req.body.modifiedby
@@ -31,7 +32,7 @@ const newPost = async (req, res) => {
 }
 
 //Endpoint trae todos los post 
-const FeaturedPosts = async (req, res) => {
+const featuredPosts = async (req, res) => {
 
      const {category} = req.body;
      try {
@@ -60,9 +61,58 @@ const FeaturedPosts = async (req, res) => {
      }
     
  };
+
+ //Endpoint trae el post con ms visitas
+const interestPost = async (req, res) => {
+
+     const {category} = req.body;
+     try {
+         const post = await postModel.findOne({
+          order: [
+               ['views', 'DESC']
+          ],
+
+         });
+
+         const token = jwt.sign({post}, env.AUTH_SECRET, {
+               expiresIn: env.AUTH_EXPIRES
+          });
+
+          res.json({
+               post,
+               token: token
+          });
+     } catch (err) {
+         res.status(500).json({message: 'Error en el servidor'});
+     }
+    
+ };
+
+ //Endpoint para sumar las visitas a un post
+const viewsUpdate = async (req, res) => {
+
+     const {id} = req.body;
+     try {
+         const viewsClick = await postModel.increment('views', {by: 1, where: {id:id} });
+
+         const token = jwt.sign({viewsClick}, env.AUTH_SECRET, {
+               expiresIn: env.AUTH_EXPIRES
+          });
+
+          res.json({
+               viewsClick,
+               token
+          });
+     } catch (err) {
+         res.status(500).json({message: 'Error en el servidor'});
+     }
+    
+ };
  
 
 module.exports = {
      newPost,
-     FeaturedPosts
+     featuredPosts,
+     viewsUpdate,
+     interestPost
 };

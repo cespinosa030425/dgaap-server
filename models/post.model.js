@@ -28,6 +28,10 @@ const modelPost = sequelizeDB.define('Post', {
         type: DataTypes.BLOB,
         allowNull: true,
     },
+    views: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
     isActive: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

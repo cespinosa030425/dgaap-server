@@ -8,7 +8,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }))
 app.use(bodyParser.urlencoded({limit: '50mb'}));
-// app.use(bodyParser({limit: '50mb'}));
+app.use(bodyParser({limit: '50mb'}));
 
 app.use(cors());
 

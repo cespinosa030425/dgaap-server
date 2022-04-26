@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const env = require('../utils/auth');
 const postModel = require('../models/post.model');
+const sequelizeDB = require('../database/db');
 
 // //funcion para crear nuevo post
 const newPost = async (req, res) => {
@@ -64,8 +65,6 @@ const featuredPosts = async (req, res) => {
 
  //Endpoint trae el post con ms visitas
 const interestPost = async (req, res) => {
-
-     const {category} = req.body;
      try {
          const post = await postModel.findOne({
           order: [
@@ -74,39 +73,42 @@ const interestPost = async (req, res) => {
 
          });
 
-         const token = jwt.sign({post}, env.AUTH_SECRET, {
+         const token = jwt.sign({post: post}, env.AUTH_SECRET, {
                expiresIn: env.AUTH_EXPIRES
           });
 
           res.json({
-               post,
+               post: post,
                token: token
           });
+
+          console.log(post)
      } catch (err) {
          res.status(500).json({message: 'Error en el servidor'});
      }
     
  };
 
+
  //Endpoint para sumar las visitas a un post
 const viewsUpdate = async (req, res) => {
 
      const {id} = req.body;
-     try {
-         const viewsClick = await postModel.increment('views', {by: 1, where: {id:id} });
 
-         const token = jwt.sign({viewsClick}, env.AUTH_SECRET, {
+     try {
+          const click = await postModel.increment('views', { by: 1, where: { postId: id }});
+
+          const token = jwt.sign({click: click}, env.AUTH_SECRET, {
                expiresIn: env.AUTH_EXPIRES
           });
 
           res.json({
-               viewsClick,
-               token
+               click:click,
+               token: token
           });
      } catch (err) {
          res.status(500).json({message: 'Error en el servidor'});
      }
-    
  };
  
 

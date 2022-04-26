@@ -9,9 +9,9 @@ router.post('/newpost', autMiddleware, postController.newPost);
 router.post('/featuredposts', autMiddleware, postController.featuredPosts);
 
 //actualiza los views
-router.post('/getview', autMiddleware, postController.interestPost);
+router.post('/updateview', autMiddleware, postController.viewsUpdate);
 
 //actualiza los views
-router.post('/view', autMiddleware, postController.viewsUpdate);
+router.get('/interest', autMiddleware, postController.interestPost);
 
 module.exports = router;

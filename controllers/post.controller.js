@@ -32,7 +32,7 @@ const newPost = async (req, res) => {
     }
 }
 
-//Endpoint trae todos los post 
+//Endpoint trae todos los post con la categoria featured
 const featuredPosts = async (req, res) => {
 
      const {category} = req.body;
@@ -55,6 +55,36 @@ const featuredPosts = async (req, res) => {
 
           res.json({
                posts: allPost,
+               token: token
+          });
+     } catch (err) {
+         res.status(500).json({message: 'Error en el servidor'});
+     }
+    
+ };
+
+ //Endpoint trae solo un  post 
+const singlePost = async (req, res) => {
+
+     const {id} = req.body;
+
+     console.log(id)
+
+     try {
+         const post = await postModel.findOne({
+          where: {
+               // isActive: true,
+               postid: id
+          }
+
+         });
+
+         const token = jwt.sign({post: post}, env.AUTH_SECRET, {
+               expiresIn: env.AUTH_EXPIRES
+          });
+
+          res.json({
+               post: post,
                token: token
           });
      } catch (err) {
@@ -116,5 +146,6 @@ module.exports = {
      newPost,
      featuredPosts,
      viewsUpdate,
-     interestPost
+     interestPost,
+     singlePost
 };

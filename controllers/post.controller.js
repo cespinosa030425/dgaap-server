@@ -63,28 +63,23 @@ const featuredPosts = async (req, res) => {
     
  };
 
- //Endpoint trae solo un  post 
-const singlePost = async (req, res) => {
-
-     const {id} = req.body;
-
-     console.log(id)
+ //Endpoint trae todos los post 
+const allPost = async (req, res) => {
 
      try {
-         const post = await postModel.findOne({
-          where: {
-               // isActive: true,
-               postid: id
-          }
+         const posts = await postModel.findAll({
+          order: [
+               ['postId', 'DESC']
+          ],
 
          });
 
-         const token = jwt.sign({post: post}, env.AUTH_SECRET, {
+         const token = jwt.sign({posts: posts}, env.AUTH_SECRET, {
                expiresIn: env.AUTH_EXPIRES
           });
 
           res.json({
-               post: post,
+               posts: posts,
                token: token
           });
      } catch (err) {
@@ -92,6 +87,7 @@ const singlePost = async (req, res) => {
      }
     
  };
+
 
  //Endpoint trae el post con ms visitas
 const interestPost = async (req, res) => {
@@ -147,5 +143,5 @@ module.exports = {
      featuredPosts,
      viewsUpdate,
      interestPost,
-     singlePost
+     allPost
 };

@@ -4,6 +4,7 @@ const env = require('../utils/auth');
 const userModel = require('../models/user.model');
 const roleModel = require('../models/role.model');
 const userRoleModel = require('../models/userRole.model');
+const personModel = require('../models/person.model');
 
 // //funcion para crear usuarios
 // const signUp = async (req, res) => {
@@ -40,23 +41,21 @@ const signIn = async (req, res) => {
           const user = await userModel.findOne({
                attributes:['personId','password'],
 
-               // include:{
-               //      model: userRoleModel,
-               //      attributes: ['roleId']
-               // },
-
                include: [
                     {
-                    model: userRoleModel,
-                    attributes:['roleId'],
-                    
-                    include:[{
-                     model: roleModel
-                    }],
-
-               },
-          ],
-
+                         model: userRoleModel,
+                         attributes:['roleId'],
+                         
+                         include:[{
+                         model: roleModel
+                         }],
+                    },
+                    // {
+                    //      model: personModel,
+                    //      attributes:['personId', 'firstName', 'lastName', 'position', 'photo'],
+                                   
+                    // },
+               ],
                where: {
                     userName: username
                },

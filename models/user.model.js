@@ -67,6 +67,7 @@ modelUser.hasMany(modelUserRole,{
     foreignKey: 'userId'
 });
 
+
 // modelRole.hasMany(modelUserRole,{
 //     foreignKey: 'roleId'
 // });

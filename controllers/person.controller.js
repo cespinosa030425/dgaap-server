@@ -49,14 +49,14 @@ const getAllPerson = async (req, res) => {
 
 //funcion para traer un usuario de la tabla person, que esten activo y el role sea null en la tabla de user
 const getOnePerson = async (req, res) => {
+
+     const {id} = req.body;
+     console.log(id);
      try {
-
-          const {email} = req.body; 
-
           const person = await personModel.findOne({
-               attributes:['personId'],         
+               attributes:['personId', 'firstName', 'lastName','birthdayDate', 'position', 'photo'],         
                where:{
-                   email: email
+                   personId: id
                },
           })
           res.json(person)

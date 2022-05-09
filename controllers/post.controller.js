@@ -36,6 +36,7 @@ const newPost = async (req, res) => {
 const featuredPosts = async (req, res) => {
 
      const {category} = req.body;
+     console.log(category)
      try {
          const allPost = await postModel.findAll({
           where: {

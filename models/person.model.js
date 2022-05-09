@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const sequelizeDB = require("../database/db");
+// const modelUser = require('../models/user.model');
 
 const modelPerson = sequelizeDB.define('Person', {
     personId: {
@@ -68,10 +69,27 @@ const modelPerson = sequelizeDB.define('Person', {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
         allowNull: true,
-    }
+    },
+    photo: {
+        type: DataTypes.BLOB,
+        allowNull: true,
+    },
+    birthdayDate: {
+      type: DataTypes.DATE,
+      allowNull: true
+  },
+  position: {
+    type: DataTypes.STRING
+},
 },{
     timestamps: false,
     tableName: "Person"
 });
+
+
+// modelPerson.hasOne(modelUser,{
+//     foreignKey: 'personId'
+// });
+
 
 module.exports = modelPerson;

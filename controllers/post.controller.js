@@ -17,7 +17,7 @@ const newPost = async (req, res) => {
               views: req.body.views,
               isActive: req.body.isactive,
               createdBy: req.body.createdby,
-              modifiedBy: req.body.modifiedby
+              modifiedBy: req.body.modifiedby,
          })     
               const token = jwt.sign({post: post}, env.AUTH_SECRET, {
                    expiresIn: env.AUTH_EXPIRES
@@ -36,7 +36,6 @@ const newPost = async (req, res) => {
 const featuredPosts = async (req, res) => {
 
      const {category} = req.body;
-     console.log(category)
      try {
          const allPost = await postModel.findAll({
           where: {
@@ -109,7 +108,6 @@ const interestPost = async (req, res) => {
                token: token
           });
 
-          console.log(post)
      } catch (err) {
          res.status(500).json({message: 'Error en el servidor'});
      }
@@ -137,6 +135,39 @@ const viewsUpdate = async (req, res) => {
          res.status(500).json({message: 'Error en el servidor'});
      }
  };
+
+  //Endpoint trae el post id fecha actual
+const postId = async (req, res) => {
+     const {title, category, author} = req.body;
+     try {
+         const post = await postModel.findOne({
+          attributes:['postId'],
+          where: {
+          title,
+          category,
+          author,
+         },
+
+         order: [
+          ['createdAt', 'DESC']
+          ],
+
+         });
+
+         const token = jwt.sign({post: post}, env.AUTH_SECRET, {
+               expiresIn: env.AUTH_EXPIRES
+          });
+
+          res.json({
+               post: post,
+               token: token
+          });
+
+     } catch (err) {
+         res.status(500).json({message: 'Error en el servidor'});
+     }
+    
+ };
  
 
 module.exports = {
@@ -144,5 +175,6 @@ module.exports = {
      featuredPosts,
      viewsUpdate,
      interestPost,
-     allPost
+     allPost,
+     postId
 };

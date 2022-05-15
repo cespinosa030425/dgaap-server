@@ -17,4 +17,7 @@ router.post('/updateview', autMiddleware, postController.viewsUpdate);
 //actualiza los views
 router.get('/interest', autMiddleware, postController.interestPost);
 
+//traer el id fecha actual
+router.post('/postid', autMiddleware, postController.postId);
+
 module.exports = router;

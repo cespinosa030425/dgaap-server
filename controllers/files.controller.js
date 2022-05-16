@@ -31,6 +31,7 @@ const createFiles = async (req, res) => {
     const { postid } = req.body;
     try {
         const files = await filesModel.findAll({
+          attributes:[['file','src'],'filesId','postId','type'],
          where: {
          postId: postid,
         },

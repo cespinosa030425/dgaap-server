@@ -81,6 +81,11 @@ const modelPerson = sequelizeDB.define('Person', {
   position: {
     type: DataTypes.STRING
 },
+isActive: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+}
+
 },{
     timestamps: false,
     tableName: "Person"

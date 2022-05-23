@@ -38,8 +38,28 @@ const getAllPerson = async (req, res) => {
           const persons = await personModel.findAll({
                attributes: ['FirstName','LastName','DocumentId','PhoneNumber','CelNumber','Email'],
                where: {
-                    IsActive: true
+                    isActive: true
                }
+          })
+          res.json(persons)
+     } catch (err) {
+          res.status(500).json(err);     
+     }
+}
+
+//funcion para traer todas personas de la tabla person, que esten activo y cumplan ano en el mes actual
+const getbirthday = async (req, res) => {
+     try {
+          const persons = await personModel.findAll({
+                attributes:['personId', 'firstName', 'lastName','birthdayDate', 'position', 'photo', 'isActive'],
+               where: {
+                    isActive: true
+               },
+               // birthdayDate:{
+               //    '$gt': 5 
+               // }
+     
+               
           })
           res.json(persons)
      } catch (err) {
@@ -65,4 +85,4 @@ const getOnePerson = async (req, res) => {
      }
 }
 
-module.exports = {createPerson, getAllPerson,getOnePerson};
+module.exports = {createPerson, getAllPerson,getOnePerson, getbirthday};

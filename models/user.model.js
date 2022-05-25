@@ -2,7 +2,6 @@ const { Sequelize, DataTypes } = require("sequelize");
 const sequelizeDB = require("../database/db");
 const modelUserRole = require('./userRole.model');
 const modelPerson = require("./person.model");
-//const modelRole = require("../models/role.model");
 
 const modelUser = sequelizeDB.define('User', {
     userId: {
@@ -67,9 +66,5 @@ modelUser.hasMany(modelUserRole,{
     foreignKey: 'userId'
 });
 
-
-// modelRole.hasMany(modelUserRole,{
-//     foreignKey: 'roleId'
-// });
 
 module.exports = modelUser;

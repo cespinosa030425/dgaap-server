@@ -1,4 +1,5 @@
 const personModel = require('../models/person.model');
+const departamentModel = require('../models/departament.model');
 const jwt = require('jsonwebtoken');
 const env = require('../utils/auth');
 
@@ -55,11 +56,9 @@ const getbirthday = async (req, res) => {
                where: {
                     isActive: true
                },
-               // birthdayDate:{
-               //    '$gt': 5 
-               // }
-     
-               
+               birthdayDate:{
+                  '$gt': 5 
+               }  
           })
           res.json(persons)
      } catch (err) {
@@ -71,13 +70,16 @@ const getbirthday = async (req, res) => {
 const getOnePerson = async (req, res) => {
 
      const {id} = req.body;
-     console.log(id);
      try {
           const person = await personModel.findOne({
-               attributes:['personId', 'firstName', 'lastName','birthdayDate', 'position', 'photo'],         
+               attributes:['personId', 'firstName', 'lastName','birthdayDate', 'position', 'photo','career', 'reportsTo','startedOn','departamentId','email'],         
                where:{
                    personId: id
                },
+               include: {
+                    model: departamentModel,
+                    attributes: ['name']
+                },
           })
           res.json(person)
      } catch (err) {

@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const sequelizeDB = require("../database/db");
-// const modelUser = require('../models/user.model');
+const modelDepartament = require('../models/departament.model');
 
 const modelPerson = sequelizeDB.define('Person', {
     personId: {
@@ -81,6 +81,15 @@ const modelPerson = sequelizeDB.define('Person', {
   position: {
     type: DataTypes.STRING
 },
+  career: {
+    type: DataTypes.STRING
+},
+  reportsTo: {
+    type: DataTypes.INTEGER
+},
+startedOn: {
+    type: DataTypes.DATE,
+},
 isActive: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
@@ -91,10 +100,8 @@ isActive: {
     tableName: "Person"
 });
 
-
-// modelPerson.hasOne(modelUser,{
-//     foreignKey: 'personId'
-// });
-
+modelPerson.belongsTo(modelDepartament,{
+    foreignKey: 'departamentId'
+});
 
 module.exports = modelPerson;

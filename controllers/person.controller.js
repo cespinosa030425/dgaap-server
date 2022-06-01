@@ -72,7 +72,7 @@ const getOnePerson = async (req, res) => {
      const {id} = req.body;
      try {
           const person = await personModel.findOne({
-               attributes:['personId', 'firstName', 'lastName','birthdayDate', 'position', 'photo','career', 'reportsTo','startedOn','departamentId','email'],         
+               attributes:['personId', 'firstName', 'lastName','birthdayDate', 'position', 'photo','career', 'reportsTo','startedOn','departamentId','email','phoneNumber'],         
                where:{
                    personId: id
                },

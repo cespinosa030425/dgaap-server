@@ -87,4 +87,26 @@ const getOnePerson = async (req, res) => {
      }
 }
 
-module.exports = {createPerson, getAllPerson,getOnePerson, getbirthday};
+//funcion para traer un usuarios que estan por debajo de 
+const getFollowers = async (req, res) => {
+
+     const {id} = req.body;
+     try {
+          const follower = await personModel.findAll({
+               attributes:['personId', 'firstName', 'lastName','birthdayDate', 'position', 'photo','career', 'reportsTo','startedOn','departamentId','email','phoneNumber'],         
+               where:{
+                    reportsTo: id
+               },
+               include: {
+                    model: departamentModel,
+                    attributes: ['name']
+                },
+          })
+          res.json(follower)
+     } catch (err) {
+          res.status(500).json(err);     
+     }
+}
+
+
+module.exports = {createPerson, getAllPerson,getOnePerson, getbirthday,getFollowers};

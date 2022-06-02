@@ -15,4 +15,7 @@ router.get('/getallbirthday', autMiddleware, personController.getbirthday)
 //ruta para traer una persona
 router.post('/getoneperson', autMiddleware, personController.getOnePerson)
 
+//ruta para traer una personas lideradas
+router.post('/getfollowers', autMiddleware, personController.getFollowers)
+
 module.exports = router

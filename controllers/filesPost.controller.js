@@ -1,14 +1,13 @@
 const jwt = require('jsonwebtoken');
 const env = require('../utils/auth');
-const filesModel = require('../models/files.model');
-const sequelizeDB = require('../database/db');
+const filesPostModel = require('../models/filesPost.model');
 
 // //funcion para crear nuevo post
-const createFiles = async (req, res) => {
+const createFilesPost = async (req, res) => {
 
     try {
 
-         const file = await  filesModel.create({
+         const file = await  filesPostModel.create({
               postId: req.body.postid,
               type: req.body.type,
               file: req.body.file,
@@ -27,10 +26,10 @@ const createFiles = async (req, res) => {
 }
 
  //Endpoint trae los archivos por id 
- const getFiles = async (req, res) => {
+ const getFilesPost = async (req, res) => {
     const { postid } = req.body;
     try {
-        const files = await filesModel.findAll({
+        const files = await filesPostModel.findAll({
           attributes:[['file','src'],'filesId','postId','type'],
          where: {
          postId: postid,
@@ -55,6 +54,6 @@ const createFiles = async (req, res) => {
 
 
 module.exports={
-    createFiles,
-    getFiles
+    createFilesPost,
+    getFilesPost
 }

@@ -1,18 +1,24 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const sequelizeDB = require("../database/db");
-const modelPost = require("../models/post.model");
 
 const modelFiles = sequelizeDB.define('Files', {
-    filesId: {
+    fileId: {
         type: DataTypes.INTEGER, 
         primaryKey: true,
         allowNull: false,
         autoIncrement: true
     }, 
-    postId: {
-        type: DataTypes.INTEGER,
+    name: {
+        type: DataTypes.STRING,
         allowNull: false
     },
+    category: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    departamentId: {
+        type: DataTypes.INTEGER, 
+    }, 
     type: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -21,13 +27,28 @@ const modelFiles = sequelizeDB.define('Files', {
         type: DataTypes.BLOB,
         allowNull: false,
     },
+    size: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+     createdBy: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        allowNull: false
+    },
+    publicationDate: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        allowNull: true,
+    },
 },{
     timestamps: false,
     tableName: "Files"
 });
 
-modelFiles.hasMany(modelPost,{
-    foreignKey: 'postId'
-});
 
 module.exports = modelFiles;

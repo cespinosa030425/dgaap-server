@@ -56,9 +56,9 @@ const getbirthday = async (req, res) => {
                where: {
                     isActive: true
                },
-               birthdayDate:{
-                  '$gt': 5 
-               }  
+               order: [
+                    ['birthdayDate', 'DESC']
+               ],
           })
           res.json(persons)
      } catch (err) {

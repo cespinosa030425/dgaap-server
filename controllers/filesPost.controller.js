@@ -52,8 +52,32 @@ const createFilesPost = async (req, res) => {
    
 };
 
+//Endpoint trae los archivos por id 
+const getVideoPost = async (req, res) => {
+     const { postid } = req.body;
+     try {
+         const video = await filesPostModel.findOne({
+           attributes:[['file','src'],'filesId','postId','type'],
+          where: {
+          postId: postid,
+          type:"URL"
+         },
+ 
+         });
+ 
+          res.json(
+               video
+          );
+ 
+     } catch (err) {
+         res.status(500).json({message: 'Error en el servidor'});
+     }
+    
+ };
+
 
 module.exports={
     createFilesPost,
-    getFilesPost
+    getFilesPost,
+    getVideoPost
 }

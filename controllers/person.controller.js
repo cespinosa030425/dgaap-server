@@ -81,6 +81,7 @@ const getOnePerson = async (req, res) => {
                     attributes: ['name']
                 },
           })
+          
           res.json(person)
      } catch (err) {
           res.status(500).json(err);     

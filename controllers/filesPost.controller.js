@@ -9,6 +9,7 @@ const createFilesPost = async (req, res) => {
 
          const file = await  filesPostModel.create({
               postId: req.body.postid,
+              name: req.body.name,
               type: req.body.type,
               file: req.body.file,
          })     

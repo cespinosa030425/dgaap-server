@@ -13,6 +13,10 @@ const modelFilesPost = sequelizeDB.define('FilesPost', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     type: {
         type: DataTypes.STRING,
         allowNull: true,

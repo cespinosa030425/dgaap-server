@@ -31,20 +31,15 @@ const createFilesPost = async (req, res) => {
     const { postid } = req.body;
     try {
         const files = await filesPostModel.findAll({
-          attributes:[['file','src'],'filesId','postId','type'],
+          attributes:[['file','src'],'filesId','postId','name','type'],
          where: {
          postId: postid,
         },
 
         });
 
-        const token = jwt.sign({files}, env.AUTH_SECRET, {
-              expiresIn: env.AUTH_EXPIRES
-         });
-
          res.json({
-              files,
-              token
+              files
          });
 
     } catch (err) {

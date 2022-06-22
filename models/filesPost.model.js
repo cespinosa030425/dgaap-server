@@ -25,6 +25,10 @@ const modelFilesPost = sequelizeDB.define('FilesPost', {
         type: DataTypes.BLOB,
         allowNull: false,
     },
+    size: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
 },{
     timestamps: false,
     tableName: "FilesPost"

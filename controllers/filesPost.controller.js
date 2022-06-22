@@ -12,6 +12,7 @@ const createFilesPost = async (req, res) => {
               name: req.body.name,
               type: req.body.type,
               file: req.body.file,
+              size: req.body.size,
          })     
               const token = jwt.sign({file}, env.AUTH_SECRET, {
                    expiresIn: env.AUTH_EXPIRES
@@ -31,7 +32,7 @@ const createFilesPost = async (req, res) => {
     const { postid } = req.body;
     try {
         const files = await filesPostModel.findAll({
-          attributes:[['file','src'],'filesId','postId','name','type'],
+          attributes:[['file','src'],'filesId','postId','name','type','size'],
          where: {
          postId: postid,
         },
@@ -53,7 +54,7 @@ const getVideoPost = async (req, res) => {
      const { postid } = req.body;
      try {
          const video = await filesPostModel.findOne({
-           attributes:[['file','src'],'filesId','postId','type'],
+           attributes:[['file','src'],'filesId','postId','name','type','size'],
           where: {
           postId: postid,
           type:"URL"

@@ -37,13 +37,8 @@ const createFiles = async (req, res) => {
 
         });
 
-        const token = jwt.sign({files}, env.AUTH_SECRET, {
-              expiresIn: env.AUTH_EXPIRES
-         });
-
          res.json({
               files,
-              token
          });
 
     } catch (err) {

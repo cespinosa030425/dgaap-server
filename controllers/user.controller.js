@@ -40,9 +40,6 @@ const getUser = async (req, res) => {
                 attributes: ['RoleName']
             },
             attributes: ['UserName'],
-            where: {
-                
-            }
         });
         res.json(users); 
     } catch (err) {

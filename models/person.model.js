@@ -87,6 +87,9 @@ const modelPerson = sequelizeDB.define('Person', {
   reportsTo: {
     type: DataTypes.INTEGER
 },
+healthInsurance: {
+    type: DataTypes.STRING,
+},
 startedOn: {
     type: DataTypes.DATE,
 },

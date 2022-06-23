@@ -1,5 +1,3 @@
-const jwt = require('jsonwebtoken');
-const env = require('../utils/auth');
 const postModel = require('../models/post.model');
 const sequelizeDB = require('../database/db');
 
@@ -19,13 +17,9 @@ const newPost = async (req, res) => {
               createdBy: req.body.createdby,
               modifiedBy: req.body.modifiedby,
          })     
-              const token = jwt.sign({post: post}, env.AUTH_SECRET, {
-                   expiresIn: env.AUTH_EXPIRES
-              });
 
          res.json({
-               post: post,
-               token: token
+          post: post
          });
     } catch (err) {
          res.status(500).json(err);
@@ -48,14 +42,8 @@ const featuredPosts = async (req, res) => {
           limit: 4
 
          });
-
-         const token = jwt.sign({allPost: allPost}, env.AUTH_SECRET, {
-               expiresIn: env.AUTH_EXPIRES
-          });
-
           res.json({
-               posts: allPost,
-               token: token
+               posts: allPost
           });
      } catch (err) {
          res.status(500).json({message: 'Error en el servidor'});
@@ -74,13 +62,8 @@ const allPost = async (req, res) => {
 
          });
 
-         const token = jwt.sign({posts: posts}, env.AUTH_SECRET, {
-               expiresIn: env.AUTH_EXPIRES
-          });
-
           res.json({
-               posts: posts,
-               token: token
+               posts: posts
           });
      } catch (err) {
          res.status(500).json({message: 'Error en el servidor'});
@@ -99,13 +82,8 @@ const interestPost = async (req, res) => {
 
          });
 
-         const token = jwt.sign({post: post}, env.AUTH_SECRET, {
-               expiresIn: env.AUTH_EXPIRES
-          });
-
           res.json({
-               post: post,
-               token: token
+               post: post
           });
 
      } catch (err) {
@@ -123,13 +101,8 @@ const viewsUpdate = async (req, res) => {
      try {
           const click = await postModel.increment('views', { by: 1, where: { postId: id }});
 
-          const token = jwt.sign({click: click}, env.AUTH_SECRET, {
-               expiresIn: env.AUTH_EXPIRES
-          });
-
           res.json({
-               click:click,
-               token: token
+               click:click
           });
      } catch (err) {
          res.status(500).json({message: 'Error en el servidor'});
@@ -154,13 +127,8 @@ const postId = async (req, res) => {
 
          });
 
-         const token = jwt.sign({post: post}, env.AUTH_SECRET, {
-               expiresIn: env.AUTH_EXPIRES
-          });
-
           res.json({
-               post: post,
-               token: token
+          post: post
           });
 
      } catch (err) {

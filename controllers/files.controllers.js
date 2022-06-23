@@ -1,10 +1,7 @@
-const jwt = require('jsonwebtoken');
-const env = require('../utils/auth');
 const filesModel = require('../models/files.model');
 
 // //funcion para crear nuevo post
 const createFiles = async (req, res) => {
-
     try {
 
          const file = await  filesModel.create({
@@ -12,13 +9,9 @@ const createFiles = async (req, res) => {
               type: req.body.type,
               file: req.body.file,
          })     
-              const token = jwt.sign({file}, env.AUTH_SECRET, {
-                   expiresIn: env.AUTH_EXPIRES
-              });
-
+            
          res.json({
-               file,
-               token
+               file
          });
     } catch (err) {
          res.status(500).json(err);

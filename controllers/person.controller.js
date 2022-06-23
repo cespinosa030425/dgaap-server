@@ -1,7 +1,6 @@
 const personModel = require('../models/person.model');
 const departamentModel = require('../models/departament.model');
-const jwt = require('jsonwebtoken');
-const env = require('../utils/auth');
+const sequelizeDB = require('../database/db');
 
 //funcion para crear persona
 const createPerson = async (req, res) => {
@@ -20,13 +19,9 @@ const createPerson = async (req, res) => {
                createdBy: req.body.createdBy,
                modifiedBy: req.body.modifiedBy
           })     
-               const token = jwt.sign({newPerson: newPerson}, env.AUTH_SECRET, {
-                    expiresIn: env.AUTH_EXPIRES
-               });
-
+     
           res.json({
-                    newPerson: newPerson,
-                    token: token
+               newPerson: newPerson
           });
      } catch (err) {
           res.status(500).json(err);
@@ -37,10 +32,17 @@ const createPerson = async (req, res) => {
 const getAllPerson = async (req, res) => {
      try {
           const persons = await personModel.findAll({
-               attributes: ['FirstName','LastName','DocumentId','PhoneNumber','CelNumber','Email'],
+             attributes:[[sequelizeDB.fn('concat', sequelizeDB.col('firstName'),' ', sequelizeDB.col('lastName')),"fullName"],'personId','birthdayDate', 'position', 'photo','career', 'reportsTo','startedOn','departamentId','email','phoneNumber','healthInsurance'],
                where: {
                     isActive: true
-               }
+               },
+               include: {
+                    model: departamentModel,
+                    attributes: ['name']
+                },
+               order: [
+                    ['firstName', 'ASC']
+               ]
           })
           res.json(persons)
      } catch (err) {

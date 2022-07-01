@@ -48,7 +48,7 @@ const modelPerson = sequelizeDB.define('Person', {
             }
         }
     },
-     departament: {
+     departamentId: {
         type: DataTypes.STRING,
         allowNull: true
     },

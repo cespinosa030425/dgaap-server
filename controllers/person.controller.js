@@ -4,30 +4,30 @@ const sequelizeDB = require('../database/db');
 const { copyDone } = require('pg-protocol/dist/messages');
 
 //funcion para crear persona
-const createPerson = async (req, res) => {
+// const createPerson = async (req, res) => {
 
-     try {
+//      try {
 
-          const newPerson = await  personModel.create({
-               employeeCode: req.body.employeeCode,
-               firstName: req.body.firstName,
-               lastName: req.body.lastName,
-               documentId: req.body.documentId,
-               phoneNumber: req.body.phoneNumber,
-               celNumber: req.body.celNumber,
-               email: req.body.email.toUpperCase(),
-               departament: req.body.departament,
-               createdBy: req.body.createdBy,
-               modifiedBy: req.body.modifiedBy
-          })     
+//           const newPerson = await  personModel.create({
+//                employeeCode: req.body.employeeCode,
+//                firstName: req.body.firstName,
+//                lastName: req.body.lastName,
+//                documentId: req.body.documentId,
+//                phoneNumber: req.body.phoneNumber,
+//                celNumber: req.body.celNumber,
+//                email: req.body.email.toUpperCase(),
+//                departament: req.body.departament,
+//                createdBy: req.body.createdBy,
+//                modifiedBy: req.body.modifiedBy
+//           })     
      
-          res.json({
-               newPerson: newPerson
-          });
-     } catch (err) {
-          res.status(500).json(err);
-     }
-}
+//           res.json({
+//                newPerson: newPerson
+//           });
+//      } catch (err) {
+//           res.status(500).json(err);
+//      }
+// }
 
 //funcion para traer todas personas de la tabla person, que esten activo y el role sea null en la tabla de user
 const getAllPerson = async (req, res) => {
@@ -109,7 +109,39 @@ const getOnePerson = async (req, res) => {
 }
 
 //actuliazar datos de persona
-// 
+const createPerson = async (req, res) => {
+
+     const {code, firstname, lastname, documentid, phone, cel, email, departament,createdby,modifiedby,date, career,  position,isactive,photo, reportto, startedon, health} = req.body;
+     console.log(createdby)
+     try {
+          const person = await personModel.create({
+               employeeCode:code,
+               firstName:firstname,
+               lastName:lastname,
+               documentId: documentid,
+               phoneNumber:phone,
+               celNumber: cel,
+               email:email,
+               departamentId:departament,
+               createdBy:createdby,
+               modifiedBy: modifiedby,
+               photo: photo,
+               birthdayDate:date,
+               position:position,
+               isActive:isactive,
+               career:career,
+               reportsTo:reportto,
+               startedOn:startedon,
+               healthInsurance:health
+          })
+          
+          res.json(person)
+     } catch (err) {
+          res.status(500).json(err);     
+     }
+}
+
+//actuliazar datos de persona
 const updatePerson = async (req, res) => {
 
      const {id, photo, firstname, lastname, documentid, cel,date, career, code, position, departament, reportto, startedon, phone, email, health} = req.body;

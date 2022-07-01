@@ -4,7 +4,7 @@ const autMiddleware = require('../middlewares/auth.middleware')
 
 
 //ruta para crear personas
-router.post('/create', personController.createPerson);
+router.post('/createperson',autMiddleware, personController.createPerson);
 
 //ruta para traer todas las personas
 router.get('/getallpersons', autMiddleware, personController.getAllPerson)

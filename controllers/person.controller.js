@@ -1,6 +1,7 @@
 const personModel = require('../models/person.model');
 const departamentModel = require('../models/departament.model');
 const sequelizeDB = require('../database/db');
+const { copyDone } = require('pg-protocol/dist/messages');
 
 //funcion para crear persona
 const createPerson = async (req, res) => {
@@ -50,6 +51,23 @@ const getAllPerson = async (req, res) => {
      }
 }
 
+const employeeTree = async (req, res) => {
+     try {
+          const users = await personModel.findAll({
+             attributes:['personId', [sequelizeDB.fn('concat', sequelizeDB.col('firstName'),' ', sequelizeDB.col('lastName')),"fullName"],'reportsTo'],
+               where: {
+                    isActive: true
+               },
+               order: [
+                    ['firstName', 'ASC']
+               ]
+          })
+          res.json(users)
+     } catch (err) {
+          res.status(500).json(err);     
+     }
+}
+
 //funcion para traer todas personas de la tabla person, que esten activo y cumplan ano en el mes actual
 const getbirthday = async (req, res) => {
      try {
@@ -74,7 +92,7 @@ const getOnePerson = async (req, res) => {
      const {id} = req.body;
      try {
           const person = await personModel.findOne({
-               attributes:['personId', 'firstName', 'lastName','birthdayDate', 'position', 'photo','career', 'reportsTo','startedOn','departamentId','email','phoneNumber'],         
+               attributes:['personId', 'firstName', 'lastName','birthdayDate', 'position', 'photo','career', 'reportsTo','startedOn','departamentId','email','phoneNumber','documentId','celNumber','employeeCode','healthInsurance'],         
                where:{
                    personId: id
                },
@@ -89,6 +107,43 @@ const getOnePerson = async (req, res) => {
           res.status(500).json(err);     
      }
 }
+
+//actuliazar datos de persona
+// 
+const updatePerson = async (req, res) => {
+
+     const {id, photo, firstname, lastname, documentid, cel,date, career, code, position, departament, reportto, startedon, phone, email, health} = req.body;
+     try {
+          const person = await personModel.update({
+               photo: photo,
+               firstName:firstname,
+               lastName:lastname,
+               documentId: documentid,
+               celNumber: cel,
+               birthdayDate:date,
+               career:career,
+               employeeCode:code,
+               position:position,
+               departamentId:departament,
+               reportsTo:reportto,
+               startedOn:startedon,
+               phoneNumber:phone,
+               email:email,
+               healthInsurance:health
+
+          },{    
+               where:{
+                   personId: id
+               }
+         
+           })
+          
+          res.json(person)
+     } catch (err) {
+          res.status(500).json(err);     
+     }
+}
+
 
 //funcion para traer un usuarios que estan por debajo de 
 const getFollowers = async (req, res) => {
@@ -112,4 +167,5 @@ const getFollowers = async (req, res) => {
 }
 
 
-module.exports = {createPerson, getAllPerson,getOnePerson, getbirthday,getFollowers};
+
+module.exports = {createPerson, getAllPerson,getOnePerson, getbirthday,getFollowers,employeeTree,updatePerson};

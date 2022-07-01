@@ -16,17 +16,17 @@ const modelPerson = sequelizeDB.define('Person', {
     firstName: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-            isAlpha: true,
+        // validate: {
+        //     isAlpha: true,
                   
-        }
+        // }
     },
     lastName: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-            isAlpha: true      
-        }
+        // validate: {
+        //     isAlpha: true      
+        // }
     },
     documentId: {
         type: DataTypes.STRING,

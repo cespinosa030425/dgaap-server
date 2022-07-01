@@ -9,6 +9,8 @@ router.post('/create', personController.createPerson);
 //ruta para traer todas las personas
 router.get('/getallpersons', autMiddleware, personController.getAllPerson)
 
+//ruta para traer todas las personas
+router.get('/employeetree', autMiddleware, personController.employeeTree)
 //ruta para traer todas las personas que cumplan en el mes actual
 router.get('/getallbirthday', autMiddleware, personController.getbirthday)
 
@@ -17,5 +19,8 @@ router.post('/getoneperson', autMiddleware, personController.getOnePerson)
 
 //ruta para traer una personas lideradas
 router.post('/getfollowers', autMiddleware, personController.getFollowers)
+
+//ruta para actilizar persona
+router.post('/updateperson', autMiddleware, personController.updatePerson)
 
 module.exports = router

@@ -5,6 +5,7 @@ const apiPersonRouter = require('./person.routes');
 const apiPostRouter = require('./post.routes');
 const apiFilesPostRouter = require('./filesPost.routes');
 const apiFilesRouter = require('./files.routes');
+const apiDepartamentRouter = require('./departament.routes');
 
 //ruta para los traer todos los usuarios
 router.use('/user', apiUserRouter);
@@ -21,9 +22,10 @@ router.use('/post', apiPostRouter);
 //rutas de los endpoint post
 router.use('/filespost', apiFilesPostRouter);
 
-
 //rutas de los endpoint post
 router.use('/files', apiFilesRouter);
+//rutas de los endpoint post
+router.use('/departament', apiDepartamentRouter);
 
 
 module.exports = router;

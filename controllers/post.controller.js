@@ -68,9 +68,7 @@ const allPost = async (req, res) => {
      } catch (err) {
          res.status(500).json({message: 'Error en el servidor'});
      }
-    
  };
-
 
  //Endpoint trae el post con ms visitas
 const interestPost = async (req, res) => {
@@ -88,10 +86,8 @@ const interestPost = async (req, res) => {
 
      } catch (err) {
          res.status(500).json({message: 'Error en el servidor'});
-     }
-    
+     }  
  };
-
 
  //Endpoint para sumar las visitas a un post
 const viewsUpdate = async (req, res) => {
@@ -133,8 +129,7 @@ const postId = async (req, res) => {
 
      } catch (err) {
          res.status(500).json({message: 'Error en el servidor'});
-     }
-    
+     }  
  };
  
 

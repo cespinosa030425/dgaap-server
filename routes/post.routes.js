@@ -1,23 +1,22 @@
 const router = require('express').Router();
 const postController = require('../controllers/post.controller');
-const autMiddleware = require('../middlewares/auth.middleware');
 
 //crear post
-router.post('/newpost', autMiddleware, postController.newPost);
+router.post('/newpost', postController.newPost);
 
 //traer los posts del menu noticias
-router.post('/featuredposts', autMiddleware, postController.featuredPosts);
+router.post('/featuredposts', postController.featuredPosts);
 
 //traer los posts 
-router.get('/allpost', autMiddleware, postController.allPost);
+router.get('/allpost', postController.allPost);
 
 //actualiza los views
-router.post('/updateview', autMiddleware, postController.viewsUpdate);
+router.post('/updateview', postController.viewsUpdate);
 
 //actualiza los views
-router.get('/interest', autMiddleware, postController.interestPost);
+router.get('/interest', postController.interestPost);
 
 //traer el id fecha actual
-router.post('/postid', autMiddleware, postController.postId);
+router.post('/postid', postController.postId);
 
 module.exports = router;

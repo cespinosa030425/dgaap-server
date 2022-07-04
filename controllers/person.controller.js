@@ -54,19 +54,38 @@ const getAllPerson = async (req, res) => {
 const employeeTree = async (req, res) => {
      try {
           const users = await personModel.findAll({
-             attributes:['personId', [sequelizeDB.fn('concat', sequelizeDB.col('firstName'),' ', sequelizeDB.col('lastName')),"fullName"],'reportsTo'],
+             attributes:['personId','firstName','lastName', [sequelizeDB.fn('concat', sequelizeDB.col('firstName'),' ', sequelizeDB.col('lastName')),"name"],'reportsTo','photo','position'],
                where: {
                     isActive: true
                },
-               order: [
-                    ['firstName', 'ASC']
-               ]
+               include: {
+                         model: departamentModel,
+                         attributes: ['name']
+                    },
           })
           res.json(users)
      } catch (err) {
           res.status(500).json(err);     
      }
 }
+
+// const employeeTree = async (req, res) => {
+//           try {
+//                const users = await personModel.findAll({
+//                   attributes:['personId','firstName','lastName','reportsTo','photo','position'],
+//                     where: {
+//                          isActive: true
+//                     } ,
+//                     include: {
+//                          model: departamentModel,
+//                          attributes: ['name']
+//                      },
+//                })
+//                res.json(users)
+//           } catch (err) {
+//                res.status(500).json(err);     
+//           }
+//      }
 
 //funcion para traer todas personas de la tabla person, que esten activo y cumplan ano en el mes actual
 const getbirthday = async (req, res) => {

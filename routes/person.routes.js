@@ -21,4 +21,7 @@ router.post('/getfollowers', personController.getFollowers)
 //ruta para actilizar persona
 router.post('/updateperson', personController.updatePerson)
 
+//ruta para actilizar persona
+router.post('/isactiveperson', personController.isActivePerson)
+
 module.exports = router

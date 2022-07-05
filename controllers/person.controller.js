@@ -217,6 +217,26 @@ const getFollowers = async (req, res) => {
      }
 }
 
+//actuliazar datos de persona
+const isActivePerson = async (req, res) => {
+
+     const {id, bool} = req.body;
+     try {
+          const person = await personModel.update({
+               isActive:bool
+          },{    
+               where:{
+                   personId: id
+               }
+           })
+          
+          res.json(person)
+     } catch (err) {
+          res.status(500).json(err);     
+     }
+}
 
 
-module.exports = {createPerson, getAllPerson,getOnePerson, getbirthday,getFollowers,employeeTree,updatePerson};
+
+
+module.exports = {createPerson, getAllPerson,getOnePerson, getbirthday,getFollowers,employeeTree,updatePerson,isActivePerson};

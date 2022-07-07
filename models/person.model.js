@@ -67,7 +67,7 @@ const modelPerson = sequelizeDB.define('Person', {
     },
     modifiedAt: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
+        // defaultValue: DataTypes.NOW,
         allowNull: true,
     },
     photo: {

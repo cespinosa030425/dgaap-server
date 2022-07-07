@@ -24,4 +24,10 @@ router.post('/updateperson', personController.updatePerson)
 //ruta para actilizar persona
 router.post('/isactiveperson', personController.isActivePerson)
 
+router.get('/lastcode', personController.getLastCode)
+
+router.post('/validationemail', personController.validationEmail)
+
+router.post('/validationdocumentid', personController.validationDocument)
+
 module.exports = router

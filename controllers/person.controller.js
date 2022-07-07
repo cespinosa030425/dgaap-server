@@ -1,7 +1,6 @@
 const personModel = require('../models/person.model');
 const departamentModel = require('../models/departament.model');
 const sequelizeDB = require('../database/db');
-const { copyDone } = require('pg-protocol/dist/messages');
 
 //funcion para crear persona
 // const createPerson = async (req, res) => {
@@ -33,10 +32,10 @@ const { copyDone } = require('pg-protocol/dist/messages');
 const getAllPerson = async (req, res) => {
      try {
           const persons = await personModel.findAll({
-             attributes:[[sequelizeDB.fn('concat', sequelizeDB.col('firstName'),' ', sequelizeDB.col('lastName')),"fullName"],'personId','birthdayDate', 'position', 'photo','career', 'reportsTo','startedOn','departamentId','email','phoneNumber','healthInsurance'],
-               where: {
-                    isActive: true
-               },
+             attributes:[[sequelizeDB.fn('concat', sequelizeDB.col('firstName'),' ', sequelizeDB.col('lastName')),"fullName"],'personId','birthdayDate', 'position', 'photo','career', 'reportsTo','startedOn','departamentId','email','phoneNumber','healthInsurance','isActive'],
+               // where: {
+               //      isActive: true
+               // },
                include: {
                     model: departamentModel,
                     attributes: ['name']
@@ -111,7 +110,7 @@ const getOnePerson = async (req, res) => {
      const {id} = req.body;
      try {
           const person = await personModel.findOne({
-               attributes:['personId', 'firstName', 'lastName','birthdayDate', 'position', 'photo','career', 'reportsTo','startedOn','departamentId','email','phoneNumber','documentId','celNumber','employeeCode','healthInsurance'],         
+               attributes:['personId', 'firstName', 'lastName','birthdayDate', 'position', 'photo','career', 'reportsTo','startedOn','departamentId','email','phoneNumber','documentId','celNumber','employeeCode','healthInsurance','isActive'],         
                where:{
                    personId: id
                },
@@ -131,7 +130,6 @@ const getOnePerson = async (req, res) => {
 const createPerson = async (req, res) => {
 
      const {code, firstname, lastname, documentid, phone, cel, email, departament,createdby,modifiedby,date, career,  position,isactive,photo, reportto, startedon, health} = req.body;
-     console.log(createdby)
      try {
           const person = await personModel.create({
                employeeCode:code,
@@ -163,7 +161,7 @@ const createPerson = async (req, res) => {
 //actuliazar datos de persona
 const updatePerson = async (req, res) => {
 
-     const {id, photo, firstname, lastname, documentid, cel,date, career, code, position, departament, reportto, startedon, phone, email, health} = req.body;
+     const {id, photo, firstname, lastname, documentid, cel,date, career, code, position, departament, reportto, startedon, phone, email, health,modifiedby,modifiedat} = req.body;
      try {
           const person = await personModel.update({
                photo: photo,
@@ -180,8 +178,9 @@ const updatePerson = async (req, res) => {
                startedOn:startedon,
                phoneNumber:phone,
                email:email,
-               healthInsurance:health
-
+               healthInsurance:health,
+               modifiedBy:modifiedby,
+               modifiedAt:modifiedat
           },{    
                where:{
                    personId: id
@@ -220,10 +219,12 @@ const getFollowers = async (req, res) => {
 //actuliazar datos de persona
 const isActivePerson = async (req, res) => {
 
-     const {id, bool} = req.body;
+     const {id, bool,modifiedby,modifiedat} = req.body;
      try {
           const person = await personModel.update({
-               isActive:bool
+               isActive:bool,
+               modifiedBy:modifiedby,
+               modifiedAt:modifiedat
           },{    
                where:{
                    personId: id
@@ -236,7 +237,54 @@ const isActivePerson = async (req, res) => {
      }
 }
 
+const getLastCode = async (req, res) => {
+     try {
+          const code = await personModel.findOne({
+               attributes:['employeeCode'],
+               order: [
+                    ['employeeCode', 'desc']
+               ]
+          })
+          res.json(code)
+     } catch (err) {
+          res.status(500).json(err);     
+     }
+}
+
+const validationEmail = async (req, res) => {
+     const {email} = req.body
+     try {
+          const isExist = await personModel.count({where: {email: email}})
+          if(isExist > 0){
+               res.json(true)
+          }else
+          {
+               res.json(false)
+          }
+          // res.json(isExist)
+     } catch (err) {
+          res.status(500).json(err);     
+     }
+}
+
+const validationDocument = async (req, res) => {
+     const {documentid} = req.body
+     try {
+          const isExist = await personModel.count({where: {documentId: documentid}})
+          if(isExist > 0){
+               res.json(true)
+          }else
+          {
+               res.json(false)
+          }
+          // res.json(isExist)
+     } catch (err) {
+          res.status(500).json(err);     
+     }
+}
 
 
 
-module.exports = {createPerson, getAllPerson,getOnePerson, getbirthday,getFollowers,employeeTree,updatePerson,isActivePerson};
+
+
+module.exports = {createPerson, getAllPerson,getOnePerson, getbirthday,getFollowers,employeeTree,updatePerson,isActivePerson,getLastCode,validationEmail,validationDocument};

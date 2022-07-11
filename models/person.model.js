@@ -93,6 +93,24 @@ healthInsurance: {
 startedOn: {
     type: DataTypes.DATE,
 },
+bloodType: {
+    type: DataTypes.STRING
+},
+emergencyName: {
+    type: DataTypes.STRING
+},
+emergencyNumber: {
+    type: DataTypes.STRING
+},
+emergencyRelationship: {
+    type: DataTypes.STRING
+},
+contractType: {
+    type: DataTypes.STRING
+},
+contractExpiration: {
+    type: DataTypes.DATE
+},
 isActive: {
     type: DataTypes.BOOLEAN,
     allowNull: false,

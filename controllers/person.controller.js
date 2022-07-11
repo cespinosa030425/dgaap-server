@@ -110,7 +110,7 @@ const getOnePerson = async (req, res) => {
      const {id} = req.body;
      try {
           const person = await personModel.findOne({
-               attributes:['personId', 'firstName', 'lastName','birthdayDate', 'position', 'photo','career', 'reportsTo','startedOn','departamentId','email','phoneNumber','documentId','celNumber','employeeCode','healthInsurance','isActive'],         
+               attributes:['personId', 'firstName', 'lastName','birthdayDate', 'position', 'photo','career', 'reportsTo','startedOn','departamentId','email','phoneNumber','documentId','celNumber','employeeCode','healthInsurance','isActive','bloodType','emergencyName','emergencyNumber','emergencyRelationship','contractType','contractExpiration'],         
                where:{
                    personId: id
                },
@@ -129,7 +129,7 @@ const getOnePerson = async (req, res) => {
 //actuliazar datos de persona
 const createPerson = async (req, res) => {
 
-     const {code, firstname, lastname, documentid, phone, cel, email, departament,createdby,modifiedby,date, career,  position,isactive,photo, reportto, startedon, health} = req.body;
+     const {code, firstname, lastname, documentid, phone, cel, email, departament,createdby,modifiedby,date, career,  position,isactive,photo, reportto, startedon, health,blood,emergencyname,emergencynumber,emergencyrelationship,contracttype,contractexpiration} = req.body;
      try {
           const person = await personModel.create({
                employeeCode:code,
@@ -149,7 +149,13 @@ const createPerson = async (req, res) => {
                career:career,
                reportsTo:reportto,
                startedOn:startedon,
-               healthInsurance:health
+               healthInsurance:health,
+               bloodType:blood,
+               emergencyName:emergencyname,
+               emergencyNumber:emergencynumber,
+               emergencyRelationship:emergencyrelationship,
+               contractType:contracttype,
+               contractExpiration:contractexpiration
           })
           
           res.json(person)
@@ -161,7 +167,7 @@ const createPerson = async (req, res) => {
 //actuliazar datos de persona
 const updatePerson = async (req, res) => {
 
-     const {id, photo, firstname, lastname, documentid, cel,date, career, code, position, departament, reportto, startedon, phone, email, health,modifiedby,modifiedat} = req.body;
+     const {id, photo, firstname, lastname, documentid, cel,date, career, code, position, departament, reportto, startedon, phone, email, health,modifiedby,modifiedat,blood,emergencyname,emergencynumber,emergencyrelationship,contracttype,contractexpiration} = req.body;
      try {
           const person = await personModel.update({
                photo: photo,
@@ -180,7 +186,13 @@ const updatePerson = async (req, res) => {
                email:email,
                healthInsurance:health,
                modifiedBy:modifiedby,
-               modifiedAt:modifiedat
+               modifiedAt:modifiedat,
+               bloodType:blood,
+               emergencyName:emergencyname,
+               emergencyNumber:emergencynumber,
+               emergencyRelationship:emergencyrelationship,
+               contractType:contracttype,
+               contractExpiration:contractexpiration
           },{    
                where:{
                    personId: id

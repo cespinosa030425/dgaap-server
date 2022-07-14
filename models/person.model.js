@@ -109,7 +109,8 @@ contractType: {
     type: DataTypes.STRING
 },
 contractExpiration: {
-    type: DataTypes.DATE
+    type: DataTypes.DATE,
+    allowNull: true
 },
 isActive: {
     type: DataTypes.BOOLEAN,

@@ -30,9 +30,9 @@ const createFiles = async (req, res) => {
 
         });
 
-         res.json({
+         res.json(
               files,
-         });
+         );
 
     } catch (err) {
         res.status(500).json({message: 'Error en el servidor'});

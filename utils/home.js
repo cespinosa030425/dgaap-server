@@ -5,5 +5,6 @@ const data = require('dotenv').config({
 
 module.exports = {
     PORT: data.parsed.PORT,
-    ROOT_API: data.parsed.ROOT_API
+    ROOT_API: data.parsed.ROOT_API,
+    SOCKET_URL: data.parsed.SOCKET_URL
 };

@@ -28,9 +28,10 @@ const io = new Server(server,{
 io.on("connection", (socket) => { //Whenever someone is trying to connect in the chat...
     console.log(`User connected: ${socket.id}`) //When someone is connected it will be show in the console
 
-    socket.on("join_room", (data) => { //data is the info that is passed from the client .... ex: RoomID    &&  join_room is the name of the event
-        socket.join(data)  //Join is a socket method to create the room
-        console.log(`User with ID: ${socket.id} joined room: ${data}`)
+    socket.on("join_room", (room) => { //data is the info that is passed from the client .... ex: RoomID    &&  join_room is the name of the event
+        socket.join(room)  //Join is a socket method to create the room
+        // console.log(`User with ID: ${socket.id} joined room: ${data}`)
+        socket.emit("active-room", room) //
     })
 
     socket.on("send_message", (data) => {  //Event to send the message

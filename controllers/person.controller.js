@@ -32,7 +32,7 @@ const sequelizeDB = require('../database/db');
 const getAllPerson = async (req, res) => {
      try {
           const persons = await personModel.findAll({
-             attributes:[[sequelizeDB.fn('concat', sequelizeDB.col('firstName'),' ', sequelizeDB.col('lastName')),"fullName"],'personId','birthdayDate', 'position', 'photo','career', 'reportsTo','startedOn','departamentId','email','phoneNumber','healthInsurance','isActive'],
+             attributes:[[sequelizeDB.fn('concat', sequelizeDB.col('firstName'),' ', sequelizeDB.col('lastName')),"fullName"],'firstName','lastName','personId','birthdayDate', 'position', 'photo','career', 'reportsTo','startedOn','departamentId','email','phoneNumber','healthInsurance','isActive'],
                // where: {
                //      isActive: true
                // },

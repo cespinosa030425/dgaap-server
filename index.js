@@ -25,8 +25,19 @@ const io = new Server(server,{
     },
 })
 
+var users =[];
+var userId="";
 io.on("connection", (socket) => { 
+
     console.log(`User connected: ${socket.id}`) 
+
+    socket.on("user", ({id}) => {  
+        userId = id;
+       
+        users.indexOf(id) === -1 ?  users.push(id): console.log("usuario existe");
+            socket.emit("active-users", users)
+            console.log(users)
+    })
 
     socket.on("join_room", (room) => {
         socket.join(room)  
@@ -48,7 +59,18 @@ io.on("connection", (socket) => {
 
     socket.on("disconnect", () => {  
         console.log("User disconnected", socket.id)
+        let index = users.findIndex(function(el){
+            return el.id == userId; // or el.nombre=='T NORTE';
+        });
+        console.log(index);
     })
+
+    // ver los usuarios conectados
+    // io.on('connection', (socket) => {
+    //     var total=io.engine.clientsCount;
+    //     socket.emit('getCount',total)
+    //     console.log(total)
+    //  });
 }) 
 
 

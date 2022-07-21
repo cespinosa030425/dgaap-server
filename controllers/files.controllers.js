@@ -40,8 +40,30 @@ const createFiles = async (req, res) => {
    
 };
 
+const getOneFile = async (req, res) => {
+    const { name } = req.body;
+    try {
+        const files = await filesModel.findAll({
+        //attributes:["fileId", "name", "category", "departamentId", "type", "file", "createdBy", "createdAt", "modifiedBy", "modifiedAt"],
+         where: {
+            name: name,
+        },
+
+        });
+
+         res.json(
+              files,
+         );
+
+    } catch (err) {
+        res.status(500).json({message: 'Error en el servidor'});
+    }
+   
+};
+
 
 module.exports={
     createFiles,
-    getFiles
+    getFiles,
+    getOneFile
 }

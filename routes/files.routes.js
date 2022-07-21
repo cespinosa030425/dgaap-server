@@ -7,4 +7,7 @@ router.post('/createfile', filesController.createFiles);
 //ruta para traer archivos
 router.post('/getfiles', filesController.getFiles);
 
+//ruta para traer archivos
+router.post('/getfile', filesController.getOneFile);
+
 module.exports = router
